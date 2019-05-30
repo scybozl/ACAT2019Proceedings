@@ -1,0 +1,5 @@
+pdflatex ACAT.tex
+bibtex   ACAT
+pdflatex ACAT.tex
+pdflatex ACAT.tex
+

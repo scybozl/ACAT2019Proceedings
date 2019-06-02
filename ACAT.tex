@@ -64,17 +64,13 @@ M_{\lambda} \equiv |{\cal M}_\lambda|^2=\mathcal{M}_B^* \mathcal{M}_B + \lambda 
 \label{eq:2ndorder}
 \end{equation}
 
-The two-loop amplitude for an arbitrary value of $\lambda$ can be reconstructed from the squared matrix-elements computed for three different values of $\lambda$. In our case, we chose $\lambda \in \lbrace -1, 0, 1 \rbrace$ and generate a new grid for the user-defined value of $\lambda$, where the amplitude for each phase-space point is set to:
-
+The two-loop amplitude for an arbitrary value of $\lambda$ can be reconstructed from the squared matrix-elements computed for three different values of $\lambda$. In our case, we chose $\lambda \in \lbrace -1, 0, 1 \rbrace$ and generate a new grid for the user-defined value of $\lambda$, where the amplitude for each pre-sampled phase-space point is calculated as:
+	
 \begin{equation}
-M_{\lambda} =M_0\,(1-\lambda^2)+\frac{M_1}{2}\,(\lambda+\lambda^2) + \frac{M_{-1}}{2}\,(-\lambda+\lambda^2)\;.
+M_{\lambda} =M_0\cdot(1-\lambda^2)+\frac{M_1}{2}\cdot(\lambda+\lambda^2) + \frac{M_{-1}}{2}\cdot(-\lambda+\lambda^2)\;.
 \end{equation}
 
-The amplitude at any phase-space point $M_{\lambda}(\hat{s}, \hat{t})$ is then interfaced to \texttt{Powheg} via an interpolation framework. Note that in this way, the top-Higgs Yukawa coupling $y_t$ can easily be varied by rescaling the monomes in Eq.~(\ref{eq:2ndorder}):
-
-\begin{equation}
-|{\cal M}_\lambda|^2=y_t^4 \left[ \mathcal{M}_B^* \mathcal{M}_B + \frac{\lambda}{y_t} \left( \mathcal{M}_B^* \mathcal{M}_T + \mathcal{M}_T^* \mathcal{M}_B  \right) +  \left( \frac{\lambda}{y_t} \right)^2 \mathcal{M}_T^* \mathcal{M}_T \right] \;.
-\end{equation}
+An interpolation framework takes the produced grid as input and the amplitude at \textit{any} phase-space point $M_{\lambda}(\hat{s}, \hat{t})$ is interfaced to \texttt{Powheg}.
 
 
 
@@ -139,7 +135,13 @@ In Fig.~\ref{fig:lambdavar14TeV}, distributions of the invariant mass of the Hig
   scale variations as described in the text.\label{fig:lambdavar14TeV}}
 \end{figure}
 
-\pagebreak
+Note that since the contributions can be separated in triangle- and box-like diagrams, the top-Higgs Yukawa coupling $y_t$ can easily be varied by rescaling the monomes in Eq.~(\ref{eq:2ndorder}):
+
+\begin{equation}
+|{\cal M}_\lambda|^2=y_t^4 \left[ \mathcal{M}_B^* \mathcal{M}_B + \frac{\chhh}{y_t} \left( \mathcal{M}_B^* \mathcal{M}_T + \mathcal{M}_T^* \mathcal{M}_B  \right) +  \left( \frac{\chhh}{y_t} \right)^2 \mathcal{M}_T^* \mathcal{M}_T \right] \;.
+\end{equation}
+
+For example, $\sigma(y_t=1.2,\chhh=1)=(1.2)^4\,\sigma(y_t=1,\chhh=1/1.2)$.
 
 \section{Parton-shower matched results}
 

@@ -32,30 +32,57 @@ Impressive experimental constraints have been set on the Higgs boson couplings t
 %The best experimental limit is given by ATLAS with $-5.0 < \kappa_{\lambda} < 12.1$ at $95\%$ confidence level~\cite{ATLAS-CONF-2018-043}, from a combination of $hh \to b\bar{b}b\bar{b}, b\bar{b}\tau^+ \tau^-$ and $b\bar{b}\gamma\gamma$ channels.
 Higher-order corrections to Higgs pair production have been calculated at several levels of approximation. In the heavy top-quark mass limit (HTL) $m_t \to \infty$, the top-quark degrees of freedom are integrated out. The NLO QCD corrections with the full top-quark mass dependence were only computed more recently~\cite{Borowka:2016ehy,Borowka:2016ypz,Baglio:2018lrj}. Based on a numerical evaluation of the two-loop contribution to $gg \to hh$ performed via sector decomposition, results were computed at NLO QCD for a class of extensions of the SM. 
 
-In the following, an implementation of the full NLO QCD corrections into the \texttt{Powheg-BOX-V2} event generator is presented. The Higgs trilinear self-coupling, as well as the top-Higgs Yukawa coupling, can be varied. Total cross-sections are computed for $\sqrt{s}=13,14$ and $27 \TeV$ at the (HE-)LHC. The fixed-order calculation is matched to both $\pythia$ and $\herwig$ parton-showers.
+In the following, an implementation of the full NLO QCD corrections into the \texttt{Powheg-BOX-V2} event generator~\cite{Nason:2004rx,Frixione:2007vw,Alioli:2010xd} is presented. The Higgs trilinear self-coupling, as well as the top-Higgs Yukawa coupling, can be varied. Total cross-sections are computed for $\sqrt{s}=13,14$ and $27 \TeV$ at the (HE-)LHC. The fixed-order calculation is matched to both $\pythia$~\cite{Sjostrand:2014zea} and $\herwig$~\cite{Bellm:2017bvx} parton showers.
 
 \section{Description of the calculation}
 
-The calculation is based on the setup presented in Ref.~\cite{Heinrich:2017kxx} for the case of the SM. Briefly, the leading-order amplitude and the HTL results have been computed analytically. The real-emission contributions were implemented in \textsc{GoSam} and interfaced to the \texttt{Powheg-BOX}, and the corresponding scalar one-loop amplitudes were evaluated with \texttt{Ninja}, \texttt{golem95C} and \texttt{OneLOop} (except for the scalar four-point function, which is taken from \texttt{VBFNLO} for numerical stability reasons).
-The two-loop amplitudes for the full-theory virtual contributions were borrowed from Refs.~\cite{}. The integral reduction was performed with \textsc{Reduze2}, and they were numerically evaluated with \textsc{SecDec3}. For a fast convergence, the integration is performed within a Quasi-Monte-Carlo implementation using a rank-1 shifted lattice. The integrals were computed with 16 dual \textsc{NVidia Tesla K20Xm} GPUs. The top-quark and Higgs masses have been set to $m_t=173 \GeV$ and $m_h = 125 \GeV$. Thus, the integrals depend only on the two Mandelstam invariants $\hat{s}$ and $\hat{t}$.
-A grid was constructed in both variables for $5291$ pre-sampled phase-space points. At any order in QCD, the squared matrix-element can be written as a second-order polynomial in $\lambda$:
+The calculation is based on the setup presented in Ref.~\cite{Heinrich:2017kxx} for the case of the SM. Briefly, the leading-order amplitude and the HTL results have been computed analytically. The real-emission contributions were implemented in \textsc{GoSam}~\cite{Cullen:2011ac,Cullen:2014yla} and interfaced to the \texttt{Powheg-BOX}, and the corresponding scalar one-loop amplitudes were evaluated with \texttt{Ninja}~\cite{Peraro:2014cba}, \texttt{golem95C}~\cite{Binoth:2008uq,Cullen:2011kv} and \texttt{OneLOop}~\cite{vanHameren:2010cp} (except for the scalar four-point function, which is taken from \texttt{VBFNLO}~\cite{Arnold:2008rz,Baglio:2014uba} for numerical stability reasons).
+The two-loop amplitudes for the full-theory virtual contributions were borrowed from Refs.~\cite{Borowka:2016ehy,Borowka:2016ypz}. The integral reduction was performed with \textsc{Reduze2}~\cite{vonManteuffel:2012np}, and they were numerically evaluated with \textsc{SecDec3}~\cite{Borowka:2015mxa}. For a fast convergence, the integration is performed within a Quasi-Monte-Carlo implementation using a rank-1 shifted lattice~\cite{Borowka:2018goh,Jones:2016bci}. The integrals were computed with 16 dual \textsc{NVidia Tesla K20Xm} GPUs. The top-quark and Higgs masses have been set to $m_t=173 \GeV$ and $m_h = 125 \GeV$. Thus, the integrals depend only on the two Mandelstam invariants $\hat{s}$ and $\hat{t}$.
+
+A grid for the two-loop amplitude was constructed in both variables using $5291$ pre-sampled phase-space points. %The trilinear Higgs self-coupling enters the full amplitude through the contribution of triangle-like diagrams $\mathcal{M}_T$, as the one shown at leading order in Fig.~\ref{}.
+Diagrams containing the trilinear Higgs coupling are called \textit{triangle-like}, and \textit{box-like} otherwise (see Fig.~\ref{fig:lodiagrams} for two leading-order diagrams). 
+
+
+\begin{figure}[htb!]
+\begin{minipage}[(a)]{0.5\textwidth}
+\centering
+\includegraphics[width=0.6\textwidth]{plots/{hh1}.eps}
+\end{minipage}
+\quad
+\begin{minipage}[(a)]{0.5\textwidth}
+\centering
+\includegraphics[width=0.6\textwidth]{plots/hh2.eps}
+\end{minipage}
+\caption{Triangle-like (left) and box-like (right) diagrams contribute to the full amplitude. The former contain the Higgs self-coupling, while the latter do not. \label{fig:lodiagrams}}
+\end{figure}
+
+
+At any order in QCD, the squared matrix-element can thus be written as a second-order polynomial in $\lambda$:
 
 \begin{equation}
-M_{\lambda} \equiv |{\cal M}_\lambda|^2=A+B\,\lambda + C\,\lambda^2\;.
+M_{\lambda} \equiv |{\cal M}_\lambda|^2=\mathcal{M}_B^* \mathcal{M}_B + \lambda \left( \mathcal{M}_B^* \mathcal{M}_T + \mathcal{M}_T^* \mathcal{M}_B  \right) +  \lambda^2 \mathcal{M}_T^* \mathcal{M}_T \;.
+\label{eq:2ndorder}
 \end{equation}
 
-Thus, the two-loop amplitude for an arbitrary value of $\lambda$ can be reconstructed from the squared matrix-elements computed for three different values of $\lambda$. In our case, we chose $\lambda \in \lbrace -1, 0, 1 \rbrace$ and generate a new grid for the user-defined value of $\lambda$:
+The two-loop amplitude for an arbitrary value of $\lambda$ can be reconstructed from the squared matrix-elements computed for three different values of $\lambda$. In our case, we chose $\lambda \in \lbrace -1, 0, 1 \rbrace$ and generate a new grid for the user-defined value of $\lambda$, where the amplitude for each phase-space point is set to:
 
 \begin{equation}
-M_{\lambda} =M_0\,(1-\lambda^2)+\frac{M_1}{2}\,(\lambda+\lambda^2) + \frac{M_{-1}}{2}\,(-\lambda+\lambda^2)\;
+M_{\lambda} =M_0\,(1-\lambda^2)+\frac{M_1}{2}\,(\lambda+\lambda^2) + \frac{M_{-1}}{2}\,(-\lambda+\lambda^2)\;.
 \end{equation}
 
-The amplitude at any phase-space point $M_{\lambda}(\hat{s}, \hat{t})$ is then interfaced to \texttt{Powheg} via an interpolation framework. 
+The amplitude at any phase-space point $M_{\lambda}(\hat{s}, \hat{t})$ is then interfaced to \texttt{Powheg} via an interpolation framework. Note that in this way, the top-Higgs Yukawa coupling $y_t$ can easily be varied by rescaling the monomes in Eq.~(\ref{eq:2ndorder}):
+
+\begin{equation}
+|{\cal M}_\lambda|^2=y_t^4 \left[ \mathcal{M}_B^* \mathcal{M}_B + \frac{\lambda}{y_t} \left( \mathcal{M}_B^* \mathcal{M}_T + \mathcal{M}_T^* \mathcal{M}_B  \right) +  \left( \frac{\lambda}{y_t} \right)^2 \mathcal{M}_T^* \mathcal{M}_T \right] \;.
+\end{equation}
+
 
 
 \section{Total and differential cross-sections for variations of the trilinear coupling}
 
-The results given below are produced using the PDF4LHC15\_nlo\_30\_pdfas sets interfaced to \texttt{Powheg} via \texttt{LHAPDF6}, with the corresponding value of $\alpha_s$. The top-quark mass is renormalized in the on-shell scheme and is set to $m_t=173 \GeV$, as in the virtual amplitude. The mass of the Higgs boson is fixed to $m_h=125 \GeV$, and the top-quark and Higgs widths are set to zero. Jets are clustered using the anti-$k_T$ algorithm as implemented in \texttt{FastJet}, with a jet distance parameter of $R=0.4$ and a minimum transverse momentum requirement of $p_{T} = 20 \GeV$. The central renormalization and factorization scales are set to $\mu_R = \mu_F = \mu_0 = m_{hh} / 2$. Scale uncertainties are estimated by 2-point variations $\mu_R = \mu_F = c \mu_0$, with $c \in \lbrace {0.5, 2.0} \rbrace$.
+The results given below are produced using the PDF4LHC15\_nlo\_30\_pdfas sets~\cite{Butterworth:2015oua,CT14,MMHT14,NNPDF} interfaced to \texttt{Powheg} via \texttt{LHAPDF6}~\cite{Buckley:2014ana}, with the corresponding value of $\alpha_s$. The top-quark mass is renormalised in the on-shell scheme and is set to $m_t=173 \GeV$, as in the virtual amplitude. The mass of the Higgs boson is fixed to $m_h=125 \GeV$, and the top-quark and Higgs widths are set to zero. Jets are clustered using the anti-$k_T$ algorithm as implemented in \texttt{FastJet}, with a jet distance parameter of $R=0.4$ and a minimum transverse momentum requirement of $p_{T} = 20 \GeV$. The central renormalisation and factorisation scales are set to $\mu_R = \mu_F = \mu_0 = m_{hh} / 2$. Scale uncertainties are estimated by 2-point variations $\mu_R = \mu_F = c\, \mu_0$, with $c \in \lbrace {0.5, 2.0} \rbrace$.
+
+Total cross-sections for Higgs pair production at the (HE-)LHC are shown in Table~\ref{tab:sigmatot}, for centre-of-mass energies of $\sqrt{s}=13,14$ and $27 \TeV$ and different values of the Higgs self-coupling $\chhh = \lambda_{\mathrm{BSM}} / \lambda_{\mathrm{SM}}$. They are accompanied by their relative scale uncertainties, which are of the order $\mathcal{O}(10-20\%)$. Notably, the $K$-factors at $14 \TeV$ show a sizeable dependence on the trilinear coupling $\chhh$. In the HTL at NLO QCD, Ref.~\cite{Grober:2015cwa} suggests that the dependence of the $K$-factors on $\chhh$ are of the order $\mathcal{O}(2-3\%)$. In the full theory, the $K$-factors are found between $1.56$ and $2.15$ for variations of the trilinear coupling $-5 \leq \chhh \leq 12$, see Fig.~\ref{fig:Kfacvariation}. 
 
 \begin{table}[htb!]
 \begin{center}
@@ -87,14 +114,16 @@ $\lambda_{\mathrm{BSM}}/\lambda_{\mathrm{SM}}$ & $\sigma_{\rm{NLO}}@13 \mathrm{T
 \label{tab:sigmatot}}
 \end{table}
 
-\begin{figure}[htb]
+\begin{figure}[htb!]
   \centering
     \includegraphics[width=0.65\textwidth]{plots/Kfactor.pdf}
 %  \includegraphics[width=\textwidth]{plots/}
 %    \caption{\label{fig:lambda_large_27}}
-\caption{Variation of the NLO K-factor with the trilinear coupling at $\sqrt{s}=14$\,TeV.}
+\caption{The dependence of the $K$-factor on the trilinear Higgs self-couplings $\chhh$ is given at $\sqrt{s}=14$\,TeV in the full theory.}
 \label{fig:Kfacvariation}
 \end{figure}
+
+In Fig.~\ref{fig:lambdavar14TeV}, distributions of the invariant mass of the Higgs pair system $m_{hh}$ are displayed for different values of $\chhh$. They exhibit a characteristic dip around $m_{hh} \sim 350 \GeV$ for values of $\chhh = 2.4$, which is not present in the SM case. This value of the trilinear self-coupling corresponds to a maximally destructive interference between triangle-like and box-like diagrams.
 
 
 \begin{figure}[htb!]
@@ -110,6 +139,15 @@ $\lambda_{\mathrm{BSM}}/\lambda_{\mathrm{SM}}$ & $\sigma_{\rm{NLO}}@13 \mathrm{T
   scale variations as described in the text.\label{fig:lambdavar14TeV}}
 \end{figure}
 
+\pagebreak
+
+\section{Parton-shower matched results}
+
+We now consider NLO distributions matched to a parton shower. The Les Houches Events (LHE)~\cite{Alwall:2006yp} files produced by \texttt{Powheg} are used as input to the \texttt{Pythia8.235} and \texttt{Herwig7.1.4} parton showers. In the case of \herwig, both the default angular-ordered $\tilde{q}$ and the dipole showers are compared. The radiation-regulating \texttt{hdamp} parameter in \texttt{Powheg} is set to $\texttt{hdamp}=250 \GeV$. Multiple-parton interactions and hadronisation are switched off. The default tunes are used for both parton showers.
+
+%We compare the fixed-order NLO result to predictions matched to \pythia~(PP8) and the \herwig~$\tilde{q}-$ordered (PH7-$\tilde{q}$), respectively dipole (PH7-dipole) showers. 
+
+Fig.~\ref{fig:lambdavar14TeV_pTHH_dRHH_showers} displays the transverse momentum of the Higgs boson pair $p_T^{hh}$ and the distance between the two Higgs bosons $\Delta R^{hh} = \sqrt{(\eta_1 - \eta_2)^2 + (\phi_1 - \phi_2)^2}$. Both \herwig~parton showers (PH7-$\tilde{q}$ and PH7-dipole) produce similar results and reproduce the fixed-order NLO prediction in the far-$p_T^{hh}$ range. In contrast, \pythia~agrees with \herwig~only for small transverse momenta, while it produces much harder radiation in the tail of the distribution. The same comment applies to the $\Delta R^{hh}$ observable.
 
 \begin{figure}[htb!]
 \begin{minipage}[(a)]{0.5\textwidth}
@@ -120,9 +158,9 @@ $\lambda_{\mathrm{BSM}}/\lambda_{\mathrm{SM}}$ & $\sigma_{\rm{NLO}}@13 \mathrm{T
 \includegraphics[width=1.\textwidth]{plots/{NLO_PP8_PH7_PH7D_cHHH_1_dRHH}.pdf}
 \end{minipage}
 \caption{The transverse momentum of one (any) Higgs boson and the $R$-separation between the two Higgs bosons are shown for the fixed-order NLO calculation and three shower setups, in 
-the $\chhh=1$ case.}
+the $\chhh=1$ case.\label{fig:lambdavar14TeV_pTHH_dRHH_showers}}
 \end{figure}
-%\label{fig:lambdavar14TeV_pTHH_dRHH_showers}
+
 
 \section{Conclusion}
 

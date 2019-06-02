@@ -1,5 +1,6 @@
 \documentclass[a4paper]{jpconf}
 \usepackage{graphicx}
+\usepackage{hyperref}
 %\usepackage{subcaption}
 
 \newcommand{\GeV}{\ensuremath{\mathrm{\:GeV}}}
@@ -135,13 +136,20 @@ In Fig.~\ref{fig:lambdavar14TeV}, distributions of the invariant mass of the Hig
   scale variations as described in the text.\label{fig:lambdavar14TeV}}
 \end{figure}
 
-Note that since the contributions can be separated in triangle- and box-like diagrams, the top-Higgs Yukawa coupling $y_t$ can easily be varied by rescaling the monomes in Eq.~(\ref{eq:2ndorder}):
+Note that since the contributions can be separated in triangle- and box-like diagrams, the top-Higgs Yukawa coupling $y_t$ can easily be varied within the same code by rescaling the monomes in Eq.~(\ref{eq:2ndorder}):
 
 \begin{equation}
 |{\cal M}_\lambda|^2=y_t^4 \left[ \mathcal{M}_B^* \mathcal{M}_B + \frac{\chhh}{y_t} \left( \mathcal{M}_B^* \mathcal{M}_T + \mathcal{M}_T^* \mathcal{M}_B  \right) +  \left( \frac{\chhh}{y_t} \right)^2 \mathcal{M}_T^* \mathcal{M}_T \right] \;.
 \end{equation}
 
-For example, $\sigma(y_t=1.2,\chhh=1)=(1.2)^4\,\sigma(y_t=1,\chhh=1/1.2)$.
+For example, $\sigma(y_t=1.2,\chhh=1)=(1.2)^4\,\sigma(y_t=1,\chhh=1/1.2)$. Fig.~\ref{fig:ytvars}  shows the distribution of $m_{hh}$ for extreme values of the top-Higgs Yukawa coupling that are still not experimentally excluded.
+
+\begin{figure}[htb!]
+  \centering
+    \includegraphics[width=0.65\textwidth]{plots/{NLO_CPP_yt_0.8_1.2_mHH}.pdf}
+\caption{The distribution of the Higgs pair invariant mass $m_{hh}$ for values of the top-Higgs Yukawa coupling $y_t \in \lbrace 0.8, 1, 1.2 \rbrace$.}
+\label{fig:ytvars}
+\end{figure}
 
 \section{Parton-shower matched results}
 
@@ -149,7 +157,7 @@ We now consider NLO distributions matched to a parton shower. The Les Houches Ev
 
 %We compare the fixed-order NLO result to predictions matched to \pythia~(PP8) and the \herwig~$\tilde{q}-$ordered (PH7-$\tilde{q}$), respectively dipole (PH7-dipole) showers. 
 
-Fig.~\ref{fig:lambdavar14TeV_pTHH_dRHH_showers} displays the transverse momentum of the Higgs boson pair $p_T^{hh}$ and the distance between the two Higgs bosons $\Delta R^{hh} = \sqrt{(\eta_1 - \eta_2)^2 + (\phi_1 - \phi_2)^2}$. Both \herwig~parton showers (PH7-$\tilde{q}$ and PH7-dipole) produce similar results and reproduce the fixed-order NLO prediction in the far-$p_T^{hh}$ range. In contrast, \pythia~agrees with \herwig~only for small transverse momenta, while it produces much harder radiation in the tail of the distribution. The same comment applies to the $\Delta R^{hh}$ observable.
+Fig.~\ref{fig:lambdavar14TeV_pTHH_dRHH_showers} displays the transverse momentum of the Higgs boson pair $p_T^{hh}$ and the distance between the two Higgs bosons $\Delta R^{hh} = \sqrt{(\eta_1 - \eta_2)^2 + (\phi_1 - \phi_2)^2}$. Both \herwig~parton showers (PH7-$\tilde{q}$ and PH7-dipole) produce similar results and reproduce the fixed-order NLO prediction in the far-$p_T^{hh}$ range. In contrast, \pythia~agrees with \herwig~only for small transverse momenta, while it produces much harder radiation in the tail of the distribution. The same comments apply to the $\Delta R^{hh}$ observable. Large parton-shower matching uncertainties in Higgs pair production have already been emphasized~\cite{Jones:2017giv}. 
 
 \begin{figure}[htb!]
 \begin{minipage}[(a)]{0.5\textwidth}
@@ -165,6 +173,10 @@ the $\chhh=1$ case.\label{fig:lambdavar14TeV_pTHH_dRHH_showers}}
 
 
 \section{Conclusion}
+
+We have presented a new package for Higgs boson pair production at NLO QCD with full top-quark mass dependence. In this package, the trilinear Higgs self-coupling can be varied explicitly. Within the same code, simultaneous variations of the top-Higgs Yukawa coupling can also be produced. The public code for the \texttt{Powheg-BOX-V2} event generator can be found at the website \href{http://powhegbox.mib.infn.it}{\tt http://powhegbox.mib.infn.it} in the {\tt User-Processes-V2/ggHH} subdirectory. As a side note, approximations related to the HTL can be enabled for comparison purposes. We have compared fixed-order predictions at NLO QCD to parton-shower matched results. The \pythia~and \herwig~($\tilde{q}$ and dipole) parton showers can be matched directly to LHE files produced by \texttt{Powheg}.
+
+
 
 \section*{References}
 

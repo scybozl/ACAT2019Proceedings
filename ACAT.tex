@@ -23,15 +23,15 @@
 
 
 \begin{abstract}
-The Higgs couplings to other particles are increasingly well-measured by the ATLAS and CMS experiments. Yet there is still room for improvement in the limits set on the Higgs trilinear self-coupling $\lambda$, mainly due to the low cross-section for Higgs boson pair production. We present inclusive and differential results for the NLO QCD corrections to Higgs pair production with the full top-quark mass dependence, where the Higgs trilinear self-coupling is varied to non-SM values. The calculation of the two-loop virtual contributions has been performed numerically using CPUs and GPUs. The fixed-order calculation is supplemented by parton showering within the \texttt{Powheg-BOX-V2} event generator, and both \pythia~and \herwig~parton-shower algorithms are implemented in a preliminary study of shower effects.
+The couplings of the Higgs boson to other particles are increasingly well-measured by the ATLAS and CMS experiments. Yet there is still room for improvement in the limits set on the Higgs trilinear self-coupling, mainly due to the low cross-section for Higgs boson pair production. We present inclusive and differential results for the NLO QCD corrections to Higgs pair production with the full top-quark mass dependence, where the Higgs trilinear self-coupling is varied to non-SM values. The calculation of the two-loop virtual contributions has been performed numerically using CPUs and GPUs. The fixed-order calculation is supplemented by parton showering within the \texttt{Powheg-BOX-V2} event generator, and both \pythia~and \herwig~parton-shower algorithms are implemented in a preliminary study of shower effects.
 \end{abstract}
 
 
 \section{Introduction}
 
-Impressive experimental constraints have been set on the Higgs boson couplings to vector bosons and heavy fermions. The Higgs potential, in contrast, leaves more room for New Physics. The Higgs boson trilinear self-coupling $\lambda$ can be constrained directly by exclusion limits on Higgs pair production $pp \to hh$.
+Impressive experimental constraints have been set on the Higgs boson couplings to vector bosons and heavy fermions~\cite{Khachatryan:2016vau,Aaboud:2017vzb,Sirunyan:2018koj,Sirunyan:2018sgc}. The Higgs potential, in contrast, leaves more room for New Physics. In particular, the Higgs boson trilinear self-coupling $\lambda$ can be experimentally constrained by exclusion limits on Higgs pair production $pp \to hh$~\cite{Sirunyan:2018two,ATLAS-CONF-2018-043}.
 %The best experimental limit is given by ATLAS with $-5.0 < \kappa_{\lambda} < 12.1$ at $95\%$ confidence level~\cite{ATLAS-CONF-2018-043}, from a combination of $hh \to b\bar{b}b\bar{b}, b\bar{b}\tau^+ \tau^-$ and $b\bar{b}\gamma\gamma$ channels.
-Higher-order corrections to Higgs pair production are routinely calculated in the heavy top-quark mass limit (HTL) $m_t \to \infty$, where the top-quark degrees of freedom are integrated out. The NLO QCD corrections with the full top-quark mass dependence were only computed more recently~\cite{Borowka:2016ehy,Borowka:2016ypz,Baglio:2018lrj}. Based on a numerical evaluation of the two-loop contribution to $gg \to hh$ performed via sector decomposition, results were computed at NLO QCD with full top-quark mass dependence for a class of extensions of the SM in Ref.~\cite{Buchalla:2018yce}. 
+Higher-order corrections to Higgs pair production are routinely calculated in the heavy top-quark mass limit (HTL) $m_t \to \infty$, where the top-quark degrees of freedom are integrated out~\cite{Dawson:1998py,deFlorian:2016uhr}. The NLO QCD corrections with the full top-quark mass dependence were only computed more recently~\cite{Borowka:2016ehy,Borowka:2016ypz,Baglio:2018lrj}. They are based on a numerical evaluation of the two-loop contribution to $gg \to hh$ performed via sector decomposition. For non-SM values of the Higgs couplings, results were computed at NLO QCD with the full top-quark mass dependence for a class of extensions of the SM in Ref.~\cite{Buchalla:2018yce}.
 
 In the following, an implementation of the full NLO QCD corrections into the \texttt{Powheg-BOX-V2} event generator~\cite{Nason:2004rx,Frixione:2007vw,Alioli:2010xd} is presented. In this framework, the Higgs trilinear self-coupling can be varied, as well as the top-Higgs Yukawa coupling. Total cross-sections are computed for $\sqrt{s}=13,14$ and $27 \TeV$ at the (HE-)LHC. Differential results are shown for $\sqrt{s}=14 \TeV$. The fixed-order calculation is then matched to both $\pythia$~\cite{Sjostrand:2014zea} and $\herwig$~\cite{Bellm:2017bvx} parton showers. For a more detailed description, the reader is referred to Ref.~\cite{Heinrich:2019bkc}.
 
@@ -71,7 +71,9 @@ The two-loop amplitude for an arbitrary value of $\lambda$ can be reconstructed 
 M_{\lambda} =M_0\cdot(1-\lambda^2)+\frac{M_1}{2}\cdot(\lambda+\lambda^2) + \frac{M_{-1}}{2}\cdot(-\lambda+\lambda^2)\;.
 \end{equation}
 
-An interpolation framework takes the produced grid as input and the amplitude at \textit{any} phase-space point $M_{\lambda}(\hat{s}, \hat{t})$ can be interfaced to \texttt{Powheg}.
+The grid produced for the two-loop amplitude is fed to an interpolation framework, which interfaces the result at \textit{any} phase-space point $M_{\lambda}(\hat{s}, \hat{t})$ to \texttt{Powheg}.
+
+%An interpolation framework takes the produced grid as input and the amplitude at \textit{any} phase-space point $M_{\lambda}(\hat{s}, \hat{t})$ can be interfaced to \texttt{Powheg}.
 
 
 
@@ -79,7 +81,7 @@ An interpolation framework takes the produced grid as input and the amplitude at
 
 The results given below are produced using the PDF4LHC15\_nlo\_30\_pdfas sets~\cite{Butterworth:2015oua,CT14,MMHT14,NNPDF} interfaced to \texttt{Powheg} via \texttt{LHAPDF6}~\cite{Buckley:2014ana}, with the corresponding value of $\alpha_s$. The top-quark mass is renormalised in the on-shell scheme and is set to $m_t=173 \GeV$, as in the virtual amplitude. The mass of the Higgs boson is fixed to $m_h=125 \GeV$, and the top-quark and Higgs widths are set to zero. Jets are clustered using the anti-$k_T$ algorithm~\cite{Cacciari:2008gp} as implemented in \texttt{FastJet}~\cite{Cacciari:2005hq, Cacciari:2011ma}, with a jet distance parameter of $R=0.4$ and a minimum transverse momentum requirement of $p_{T} = 20 \GeV$. The central renormalisation and factorisation scales are set to $\mu_R = \mu_F = \mu_0 = m_{hh} / 2$. Scale uncertainties are estimated by 2-point variations $\mu_R = \mu_F = c\, \mu_0$, with $c \in \lbrace {0.5, 2.0} \rbrace$.
 
-Total cross-sections for Higgs pair production at the (HE-)LHC are shown in Table~\ref{tab:sigmatot}, for centre-of-mass energies of $\sqrt{s}=13,14$ and $27 \TeV$ and different values of the Higgs self-coupling $\chhh = \lambda_{\mathrm{BSM}} / \lambda_{\mathrm{SM}}$. They are accompanied by their relative scale uncertainties, which are of the order $\mathcal{O}(10-20\%)$. Notably, the $K$-factors at $14 \TeV$ show a sizeable dependence on the trilinear coupling $\chhh$. In the HTL at NLO QCD, Ref.~\cite{Grober:2015cwa} suggested that the dependence of the $K$-factors on $\chhh$ are of the order $\mathcal{O}(2-3\%)$. In the full theory, the $K$-factors are found between $1.56$ and $2.15$ for variations of the trilinear coupling $-5 \leq \chhh \leq 12$, see Fig.~\ref{fig:Kfacvariation}. 
+Total cross-sections for Higgs pair production at the (HE-)LHC are shown in Table~\ref{tab:sigmatot}, for centre-of-mass energies of $\sqrt{s}=13,14$ and $27 \TeV$ and different values of the Higgs self-coupling $\chhh = \lambda_{\mathrm{BSM}} / \lambda_{\mathrm{SM}}$. They are accompanied by their relative scale uncertainties, which are of the order $\mathcal{O}(10-20\%)$. Notably, the $K$-factors at $14 \TeV$ show a sizeable dependence on the trilinear coupling $\chhh$. In the HTL at NLO QCD, Ref.~\cite{Grober:2015cwa} suggested a variation of the $K$-factors with $\chhh$ of the order $\mathcal{O}(2-3\%)$. In the full theory, the $K$-factors are found between $1.56$ and $2.15$ for variations of the trilinear coupling $-5 \leq \chhh \leq 12$, see Fig.~\ref{fig:Kfacvariation}. 
 
 \begin{table}[htb!]
 \begin{center}
@@ -131,18 +133,18 @@ In Fig.~\ref{fig:lambdavar14TeV}, distributions of the invariant mass of the Hig
 \begin{minipage}[(a)]{0.5\textwidth}
 \includegraphics[width=1.\textwidth]{figures/NLO_cHHH_1_-1_3_5_mHH-paper.pdf}
 \end{minipage}
-\caption{Higgs boson pair invariant mass distributio	ns for various
-  values of $\chhh$  at $\sqrt{s}=14$\,TeV. The uncertainty bands are from
+\caption{Distributions of the Higgs boson pair invariant mass $m_{hh}$ for various
+  values of $\chhh$ at $\sqrt{s}=14$\,TeV. The uncertainty bands are from
   scale variations as described in the text.\label{fig:lambdavar14TeV}}
 \end{figure}
 
-Note that since the contributions can be separated in triangle- and box-like diagrams, the top-Higgs Yukawa coupling $y_t$ can easily be varied within the same code by rescaling the monomials in Eq.~(\ref{eq:2ndorder}):
+Note that since the contributions can be separated in triangle- and box-like diagrams, the top-Higgs Yukawa coupling $y_t$ can easily be varied within the same code. A non-SM value of $y_t$ yields in Eq.~(\ref{eq:2ndorder}):
 
 \begin{equation}
 |{\cal M}_\lambda|^2=y_t^4 \left[ \mathcal{M}_B^* \mathcal{M}_B + \frac{\chhh}{y_t} \left( \mathcal{M}_B^* \mathcal{M}_T + \mathcal{M}_T^* \mathcal{M}_B  \right) +  \left( \frac{\chhh}{y_t} \right)^2 \mathcal{M}_T^* \mathcal{M}_T \right] \;.
 \end{equation}
 
-For example, $\sigma(y_t=1.2,\chhh=1)=(1.2)^4\,\sigma(y_t=1,\chhh=1/1.2)$. Fig.~\ref{fig:ytvars}  shows the distribution of $m_{hh}$ for extreme values of the top-Higgs Yukawa coupling that are still not experimentally excluded.
+The cross-section can be computed by setting the correct value of the ratio $\chhh / y_t$ and of the global rescaling factor. For example, $\sigma(y_t=1.2,\chhh=1)=(1.2)^4\,\sigma(y_t=1,\chhh=1/1.2)$. Fig.~\ref{fig:ytvars}  shows the distribution of $m_{hh}$ for extreme values of the top-Higgs Yukawa coupling that are still not experimentally excluded~\cite{Sirunyan:2018sgc}.
 
 \begin{figure}[htb!]
   \centering
@@ -157,7 +159,7 @@ We now consider NLO distributions matched to a parton shower. The Les Houches Ev
 
 %We compare the fixed-order NLO result to predictions matched to \pythia~(PP8) and the \herwig~$\tilde{q}-$ordered (PH7-$\tilde{q}$), respectively dipole (PH7-dipole) showers. 
 
-Fig.~\ref{fig:lambdavar14TeV_pTHH_dRHH_showers} displays the transverse momentum of the Higgs boson pair $p_T^{hh}$ and the separation between the two Higgs bosons $\Delta R^{hh} = \sqrt{(\eta_1 - \eta_2)^2 + (\phi_1 - \phi_2)^2}$. Considering first the distribution of $p_T^{hh}$, both \herwig~parton showers (PH7-$\tilde{q}$ and PH7-dipole) generate similar results and reproduce the fixed-order NLO prediction in the far-$p_T^{hh}$ range. In contrast, \pythia~agrees with \herwig~only for small transverse momenta, while it produces much harder radiation in the tail of the distribution. The same comments apply to the $\Delta R^{hh}$ observable in the shower-dominated region $0 < \Delta R^{hh} < \pi$. Large parton-shower matching uncertainties in Higgs pair production have already been emphasized~\cite{Jones:2017giv}. 
+Fig.~\ref{fig:lambdavar14TeV_pTHH_dRHH_showers} displays the transverse momentum of the Higgs boson pair $p_T^{hh}$ and the separation between the two Higgs bosons $\Delta R^{hh} = \sqrt{(\eta_1 - \eta_2)^2 + (\phi_1 - \phi_2)^2}$. Considering first the distribution of $p_T^{hh}$, both \herwig~parton showers (PH7-$\tilde{q}$ and PH7-dipole) generate similar results and reproduce the fixed-order NLO prediction in the far-$p_T^{hh}$ range. In contrast, \pythia~agrees with \herwig~only for small transverse momenta, while it produces much harder radiation in the tail of the distribution. The same comments apply to the $\Delta R^{hh}$ observable in the region $0 < \Delta R^{hh} < \pi$ where shower contributions are important. Large parton-shower matching uncertainties in Higgs pair production have already been emphasized in Ref.~\cite{Jones:2017giv}. 
 
 \begin{figure}[htb!]
 \begin{minipage}[(a)]{0.5\textwidth}
@@ -174,7 +176,7 @@ the $\chhh=1$ case.\label{fig:lambdavar14TeV_pTHH_dRHH_showers}}
 
 \section{Conclusion}
 
-We have presented a new package for Higgs boson pair production at NLO QCD with full top-quark mass dependence. In this package, the trilinear Higgs self-coupling can be varied explicitly. Within the same code, simultaneous variations of the top-Higgs Yukawa coupling can also be produced. The public code for the \texttt{Powheg-BOX-V2} event generator can be found at the website \href{http://powhegbox.mib.infn.it}{\tt http://powhegbox.mib.infn.it} in the {\tt User-Processes-V2/ggHH} subdirectory. As a side note, approximations related to the HTL can be enabled for comparison purposes. We have emphasized that the full $m_t$-dependent NLO QCD corrections are accompanied by large $K$-factors. Moreover, they induce a sizeable dependence of the $K$-factors on the trilinear Higgs self-coupling $\chhh$, which is not present in the HTL. We have compared fixed-order predictions at NLO QCD to parton-shower matched results. Both the \pythia~and \herwig~($\tilde{q}$ and dipole) parton showers can be matched directly to LHE files produced by \texttt{Powheg}. Full particle-level events can thus be produced with our framework, including Higgs boson decays and hadronisation.
+We have presented a new package for Higgs boson pair production at NLO QCD with full top-quark mass dependence. In this package, the trilinear Higgs self-coupling can be varied explicitly. Within the same code, simultaneous variations of the top-Higgs Yukawa coupling can also be produced. The public code for the \texttt{Powheg-BOX-V2} event generator can be found at the website \href{http://powhegbox.mib.infn.it}{\tt http://powhegbox.mib.infn.it} in the {\tt User-Processes-V2/ggHH} subdirectory. As a side note, approximations related to the HTL can be enabled for comparison purposes. We have emphasized that the full $m_t$-dependent NLO QCD corrections are accompanied by large $K$-factors. Moreover, they induce a sizeable dependence of the $K$-factors on the trilinear Higgs self-coupling $\chhh$, which is not present in the HTL. We have compared fixed-order predictions at NLO QCD to parton-shower matched results. Both the \pythia~and \herwig~($\tilde{q}$ and dipole) parton showers can be matched directly to LHE files produced by \texttt{Powheg}. Full particle-level events can be produced with our framework, including Higgs boson decays and hadronisation.
 
 
 

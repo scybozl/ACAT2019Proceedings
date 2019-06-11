@@ -29,9 +29,9 @@ The couplings of the Higgs boson to other particles are increasingly well measur
 
 \section{Introduction}
 
-Impressive experimental constraints have been set on the Higgs boson couplings to vector bosons and heavy fermions~\cite{Khachatryan:2016vau,Aaboud:2017vzb,Sirunyan:2018koj,Sirunyan:2018sgc}. The Higgs potential, in contrast, leaves more room for New Physics. In particular, the Higgs boson trilinear self-coupling $\lambda$ can be experimentally constrained by exclusion limits on Higgs boson pair production $pp \to hh$~\cite{Sirunyan:2018two,ATLAS-CONF-2018-043}.
+Impressive experimental constraints have been set on the Higgs boson couplings to vector bosons and heavy fermions~\cite{Khachatryan:2016vau,Aaboud:2017vzb,Sirunyan:2018koj,Sirunyan:2018sgc}. The Higgs potential, in contrast, leaves more room for New Physics. In particular, the Higgs boson trilinear self-coupling $\lambda$ can be experimentally constrained by exclusion limits on Higgs boson pair production $pp \to hh$~\cite{Sirunyan:2018two,ATLAS-CONF-2018-043}, where the best limit on $\kappa_{\lambda}=\lambda / \lambda_{\mathrm{SM}}$ is currently given by ATLAS with $-5.0 < \kappa_{\lambda} < 12.1$ at $95\%$ confidence level.
 %The best experimental limit is given by ATLAS with $-5.0 < \kappa_{\lambda} < 12.1$ at $95\%$ confidence level~\cite{ATLAS-CONF-2018-043}, from a combination of $hh \to b\bar{b}b\bar{b}, b\bar{b}\tau^+ \tau^-$ and $b\bar{b}\gamma\gamma$ channels.
-Higher-order corrections to Higgs pair production were first calculated in the heavy top-quark mass limit (HTL) $m_t \to \infty$, where the top-quark degrees of freedom are integrated out~\cite{Dawson:1998py,deFlorian:2013jea,Grigo:2014jma,deFlorian:2016uhr}. The NLO QCD corrections with the full top-quark mass dependence were only computed more recently~\cite{Borowka:2016ehy,Borowka:2016ypz,Baglio:2018lrj}. They are based on numerical evaluations of the two-loop contribution to $gg \to hh$. For non-SM values of the Higgs couplings, results were computed at NLO QCD with the full top-quark mass dependence for a class of extensions of the SM in Ref.~\cite{Buchalla:2018yce}.
+Higher-order corrections to Higgs pair production were first calculated in the heavy top-quark mass limit (HTL) $m_t \to \infty$, where the top-quark degrees of freedom are integrated out~\cite{Dawson:1998py,deFlorian:2013jea,Grigo:2014jma,deFlorian:2016uhr}. The NLO QCD corrections with the full top-quark mass dependence were only computed more recently~\cite{Borowka:2016ehy,Borowka:2016ypz,Baglio:2018lrj}. The latter are based on numerical evaluations of the two-loop contribution to $gg \to hh$. For non-SM values of the Higgs couplings, results were computed at NLO QCD in the full theory for a class of extensions of the SM in Ref.~\cite{Buchalla:2018yce}.
 
 In the following, an implementation of the full NLO QCD corrections into the \texttt{Powheg-BOX-V2} event generator~\cite{Nason:2004rx,Frixione:2007vw,Alioli:2010xd} is presented. In this framework, the Higgs trilinear self-coupling can be varied, as well as the top-Higgs Yukawa coupling. Total cross sections are computed for $\sqrt{s}=13,14$ and $27 \TeV$ at the (HE-)LHC. Differential results are shown for $\sqrt{s}=14 \TeV$. The fixed-order calculation is then matched to both $\pythia$~\cite{Sjostrand:2014zea} and $\herwig$~\cite{Bellm:2017bvx} parton showers. For a more detailed description, the reader is referred to Ref.~\cite{Heinrich:2019bkc}.
 
@@ -43,19 +43,26 @@ where the reduction of the one-loop amplitude has been performed with \texttt{Ni
 The two-loop amplitude for the full virtual contribution was adapted from Refs.~\cite{Borowka:2016ehy,Borowka:2016ypz}, which used an extension of the \textsc{GoSam} package to two loops~\cite{Jones:2016bci}. There, the integral reduction was performed with \textsc{Reduze2}~\cite{vonManteuffel:2012np}, and the integrals were numerically evaluated with \textsc{SecDec3}~\cite{Borowka:2015mxa}. For a fast convergence, the integration was performed within a Quasi-Monte-Carlo implementation using a rank-1 shifted lattice rule~\cite{Borowka:2018goh,Jones:theseproceedings}. The integrals were computed with 16 dual \textsc{NVidia Tesla K20Xm} GPUs. The top-quark and Higgs masses have been set to $m_t=173 \GeV$ and $m_h = 125 \GeV$. Thus, the integrals depend only on the two Mandelstam invariants $\hat{s}$ and $\hat{t}$.
 
 A grid for the two-loop amplitude was constructed in both variables using $5291$ pre-sampled phase-space points. %The trilinear Higgs self-coupling enters the full amplitude through the contribution of triangle-like diagrams $\mathcal{M}_T$, as the one shown at leading order in Fig.~\ref{}.
-We split the amplitude in two contributions: diagrams containing the trilinear Higgs coupling are called \textit{triangle-like}, and those that do not are called \textit{box-like} (see Fig.~\ref{fig:lodiagrams} for two leading-order diagrams). 
+We split the amplitude in two contributions: diagrams containing the trilinear Higgs coupling are called \textit{triangle-like}, and those that do not are called \textit{box-like} (see Fig.~\ref{fig:lodiagrams} for two diagrams at NLO). 
 
-{\it Comment: it would be more instructive to show two-loop diagram examples}
+%{\it Comment: it would be more instructive to show two-loop diagram examples}
 
 \begin{figure}[htb!]
-\begin{minipage}[(a)]{0.5\textwidth}
+\begin{minipage}[c]{0.5\textwidth}
 \centering
-\includegraphics[width=0.6\textwidth]{figures/{hh1}.eps}
+\includegraphics[width=0.6\textwidth]{figures/{hh1-2}.eps}
 \end{minipage}
-\quad
-\begin{minipage}[(a)]{0.5\textwidth}
+%\quad
+\begin{minipage}[c]{0.5\textwidth}
 \centering
-\includegraphics[width=0.6\textwidth]{figures/hh2.eps}
+\includegraphics[width=0.6\textwidth]{figures/{hh2-2}.eps}
+\end{minipage}
+\begin{minipage}[t]{0.5\textwidth}
+\centering$\mathcal{M}_T$
+\end{minipage}
+%\quad
+\begin{minipage}[t]{0.5\textwidth}
+\centering$\mathcal{M}_B$
 \end{minipage}
 \caption{Triangle-like (left) and box-like (right) diagrams contribute to the full amplitude. The former contain the Higgs self-coupling, while the latter do not. \label{fig:lodiagrams}}
 \end{figure}
@@ -118,7 +125,7 @@ $\lambda_{\mathrm{BSM}}/\lambda_{\mathrm{SM}}$ & $\sigma_{\rm{NLO}}@13 \mathrm{T
 
 \begin{figure}[htb!]
   \centering
-    \includegraphics[width=0.5\textwidth]{figures/Kfactor.pdf}
+    \includegraphics[width=0.65\textwidth]{figures/Kfactor.pdf}
 %  \includegraphics[width=\textwidth]{figures/}
 %    \caption{\label{fig:lambda_large_27}}
 \caption{The dependence of the $K$-factor on the trilinear Higgs self-couplings $\chhh$ is given at $\sqrt{s}=14$\,TeV in the full theory.}
@@ -137,7 +144,8 @@ In Fig.~\ref{fig:lambdavar14TeV}, distributions of the invariant mass $m_{hh}$ o
 \includegraphics[width=1.\textwidth]{figures/NLO_cHHH_1_-1_3_5_mHH-paper.pdf}
 \end{minipage}
 \caption{Distributions of the Higgs boson pair invariant mass $m_{hh}$ for various
-  values of $\chhh$ at $\sqrt{s}=14$\,TeV. The uncertainty bands are from
+  values of $\chhh$ at $\sqrt{s}=14$\,TeV. %Small positive values of $\chhh$ are given on the left, and large or negative values on the right.
+  The uncertainty bands are from
   scale variations as described in the text.\label{fig:lambdavar14TeV}}
 \end{figure}
 
@@ -147,7 +155,7 @@ Note that since the contributions can be separated in triangle- and box-like dia
 |{\cal M}_\lambda|^2=y_t^4 \left[ \mathcal{M}_B^* \mathcal{M}_B + \frac{\chhh}{y_t} \left( \mathcal{M}_B^* \mathcal{M}_T + \mathcal{M}_T^* \mathcal{M}_B  \right) +  \left( \frac{\chhh}{y_t} \right)^2 \mathcal{M}_T^* \mathcal{M}_T \right] \;.
 \end{equation}
 
-The cross-section can be computed by setting the corresponding value of the ratio $\chhh / y_t$ in the MC generator, and multiplying by an overall factor. For example, $\sigma(y_t=1.2,\chhh=1)=(1.2)^4\,\sigma(y_t=1,\chhh=1/1.2)$. Fig.~\ref{fig:ytvars}  shows the distribution of $m_{hh}$ for extreme values of the top-Higgs Yukawa coupling that are still not experimentally excluded~\cite{Sirunyan:2018sgc}.
+The cross-section can be computed by setting $\chhh$ to the desired value of the ratio $\chhh / y_t$, and rescaling the result by an overall factor $y_t^4$. For example, $\sigma(y_t=1.2,\chhh=1)=(1.2)^4\,\sigma(y_t=1,\chhh=1/1.2)$. Fig.~\ref{fig:ytvars}  shows the distribution of $m_{hh}$ for  values of the top-Higgs Yukawa coupling that are still not experimentally excluded~\cite{Sirunyan:2018sgc}.
 
 \begin{figure}[htb!]
   \centering
